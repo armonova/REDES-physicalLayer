@@ -14,10 +14,10 @@ MACCLIENTE=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print 
 # SOLICITA O MAC DO SERVER
 
 # Perguntia via protocolo ARP qual o endereço fisico do IP informado
-MACSERVER=$(arp 172.16.128.1 | awk 'FNR==2{ print $3 }')
+# MACSERVER=$(arp 172.16.128.1 | awk 'FNR==2{ print $3 }')
 
 # outra maneira de fazer sem o protocolo ARP
-# MACDESTINO=$(cat solicitaMAC.txt | netcat 172.16.252.72 1234)
+MACSERVER=$(cat solicitaMAC.txt | netcat 192.168.1.8 1234)
 
 
 # ---------------------------------------------
