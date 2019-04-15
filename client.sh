@@ -1,12 +1,14 @@
 #!/bin/bash
 
-nc localhost 3000
+echo "Digite a mensagem que você deseja enviar" 
+read MENSAGEM
+echo "Digite o IP do destino"
+read IP
+MAC=$(cat /sys/class/net/enp1s0f1/address)
+echo "$MAC"
 
-case
+# METODO 1 - O cliente recebe o arquivo do servidor e salva em um arquivo
+# netcat 172.16.252.72 1234 > pdu_Cliente.txt
 
-while read -r cmd; do
-  case "$cmd" in
-    d) d
-    q) q
-    *) outros
-  esac
+# METODO 2 - O cliente manda o aquivo para o IP do servidor
+cat quadro.txt | netcat 172.16.252.72 1234
