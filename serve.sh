@@ -19,12 +19,14 @@ cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address
 # cat quadro.txt | nc -l -p 1234
 
 # METODO 2 - O cliente manda o aquivo para o IP do servidor
-RECEBE=$(nc -l -p 1234 -q 1)
-echo "Recebido: $RECEBE"
-case "$RECEBE" in
+while [[ 1 ]]; do
+	RECEBE=$(nc -l -p 1234 -q 1)
+	echo "Recebido: $RECEBE"
+	case "$RECEBE" in
 		MAC)	cat MACServer.txt | nc -l -p 1234;;
 		*) 		echo "Não entrou"
-esac
+	esac
+done
 
 
-nc -l -p 1234 -q 1 > quadroServe.txt < /dev/null
+# nc -l -p 1234 -q 1 > quadroServe.txt < /dev/null
