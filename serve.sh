@@ -20,7 +20,7 @@ cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address
 
 # METODO 2 - O cliente manda o aquivo para o IP do servidor
 while [[ 1 ]]; do
-	RECEBE=$(nc -l -p 1234 -q 1)
+	RECEBE=$(nc -l -p 1234 -q 2)
 	echo "Recebido"
 	case "$RECEBE" in
 		MAC)	cat MACServer.txt | nc -l -p 1234
@@ -31,5 +31,6 @@ while [[ 1 ]]; do
 	echo
 done
 
+#
 
 # nc -l -p 1234 -q 1 > quadroServe.txt < /dev/null

@@ -9,7 +9,7 @@ read IPSERVER
 # ---------------------------------------------
 # PEGA O MAC DO CLIENTE
 MACCLIENTE=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address)
-
+IPCLIENTE=172.16.251.78
 
 # ---------------------------------------------
 # SOLICITA O MAC DO SERVER
@@ -18,11 +18,17 @@ MACCLIENTE=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print 
 # MACSERVER=$(arp 172.16.128.1 | awk 'FNR==2{ print $3 }')
 
 # outra maneira de solicitar o MAC sem o protocolo ARP
-cat solicitaMAC.txt | netcat 172.16.251.78 1234
+cat solicitaMAC.txt | netcat $IPSERVER 1234
+#172.16.251.78
 
 # envia a mensagem para o servidor
-MACSERVER=$(cat mensagem.txt | netcat 172.16.251.78 1234)
 
+# MONTA A PDU
+echo "IP SERVER: $IPSERVER"
+echo "IP CLIENTE $IPCLIENTE"
+./makePDU.sh $IPCLIENTE $IPSERVER
+
+MACSERVER=$(cat pdu.txt | netcat $IPSERVER 1234)
 # ---------------------------------------------
 # ENVIA O DADO PARA O DESTINO
 echo

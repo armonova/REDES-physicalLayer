@@ -49,7 +49,8 @@ d4=$(printf "%08d" $d4)
 SOURCEIP=$s1$s2$s3$s4
 DESTINIP=$d1$d2$d3$d4
 
-DATA=`cat pdu_Cliente.txt`
+DATA=`cat mensagem.txt`
+echo $DATA
 
 DATA=`echo $DATA | perl -lpe '$_=unpack"B*"'`
 
@@ -66,4 +67,4 @@ echo $SOURCEIP
 echo $DESTINIP
 echo $DATA
 
-echo $VERSION$IHL$TOS$LENGTH$ID$FLAGS$OFFSET$TTL$PROTOCOL$CHECKSUM$SOURCEIP$DESTINIP$DATA >> pdu.txt
+echo $VERSION$IHL$TOS$LENGTH$ID$FLAGS$OFFSET$TTL$PROTOCOL$CHECKSUM$SOURCEIP$DESTINIP$DATA > pdu.txt
