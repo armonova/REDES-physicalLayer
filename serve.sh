@@ -21,11 +21,14 @@ cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address
 # METODO 2 - O cliente manda o aquivo para o IP do servidor
 while [[ 1 ]]; do
 	RECEBE=$(nc -l -p 1234 -q 1)
-	echo "Recebido: $RECEBE"
+	echo "Recebido"
 	case "$RECEBE" in
-		MAC)	cat MACServer.txt | nc -l -p 1234;;
-		*) 		echo "Não entrou"
+		MAC)	cat MACServer.txt | nc -l -p 1234
+				echo "MAC informado"
+				cat MACServer.txt;;
+		*) 		echo "Mensagem: $RECEBE"
 	esac
+	echo
 done
 
 

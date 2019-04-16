@@ -2,6 +2,7 @@
 
 echo "Digite a mensagem que você deseja enviar" 
 read MENSAGEM
+echo $MENSAGEM > mensagem.txt
 echo "Digite o IP do destino"
 read IPSERVER
 
@@ -16,9 +17,11 @@ MACCLIENTE=$(cat /sys/class/net/$(ip route show default | awk '/default/ {print 
 # Perguntia via protocolo ARP qual o endereço fisico do IP informado
 # MACSERVER=$(arp 172.16.128.1 | awk 'FNR==2{ print $3 }')
 
-# outra maneira de fazer sem o protocolo ARP
-MACSERVER=$(cat solicitaMAC.txt | netcat 192.168.1.10 1234)
+# outra maneira de solicitar o MAC sem o protocolo ARP
+cat solicitaMAC.txt | netcat 172.16.251.78 1234
 
+# envia a mensagem para o servidor
+MACSERVER=$(cat mensagem.txt | netcat 172.16.251.78 1234)
 
 # ---------------------------------------------
 # ENVIA O DADO PARA O DESTINO
