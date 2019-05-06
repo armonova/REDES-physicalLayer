@@ -22,13 +22,13 @@ cat solicitaMAC.txt | netcat $IPSERVER 1234
 #172.16.251.78
 
 # envia a mensagem para o servidor
+MACSERVER=$(cat pdu.txt | netcat $IPSERVER 1234)
 
 # MONTA A PDU
 echo "IP SERVER: $IPSERVER"
 echo "IP CLIENTE $IPCLIENTE"
 ./makePDU.sh $IPCLIENTE $IPSERVER
 
-MACSERVER=$(cat pdu.txt | netcat $IPSERVER 1234)
 # ---------------------------------------------
 # ENVIA O DADO PARA O DESTINO
 echo

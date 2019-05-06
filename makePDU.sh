@@ -50,14 +50,13 @@ SOURCEIP=$s1$s2$s3$s4
 DESTINIP=$d1$d2$d3$d4
 
 DATA=`cat mensagem.txt`
-echo $DATA
 
 DATA=`echo $DATA | perl -lpe '$_=unpack"B*"'`
 
 LENGTH=$((${#DATA} + 5*32))
 LENGTH=`echo "obase=2;$LENGTH" | bc`
 LENGTH=$(printf "%08d" $LENGTH)
-
+echo
 echo PDU:
 
 echo $VERSION $IHL $TOS $LENGTH
