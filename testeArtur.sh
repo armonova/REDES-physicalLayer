@@ -1,0 +1,3 @@
+read RECEBE
+CHECK=${#RECEBE}
+echo $CHECK

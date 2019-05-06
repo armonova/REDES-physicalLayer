@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo "Digite a mensagem que você deseja enviar" 
-read MENSAGEM
-echo $MENSAGEM > mensagem.txt
+echo "A mensagem que será enviada é" 
+cat CLIENTE4-CLIENTE1-mensagem.tx.txt
 echo "Digite o IP do destino"
 read IPSERVER
 
@@ -18,25 +17,30 @@ IPCLIENTE=172.16.251.78
 # MACSERVER=$(arp 172.16.128.1 | awk 'FNR==2{ print $3 }')
 
 # outra maneira de solicitar o MAC sem o protocolo ARP
-cat solicitaMAC.txt | netcat $IPSERVER 1234
+cat AUX-solicitaMAC.txt | netcat $IPSERVER 1234
 #172.16.251.78
 
 # envia a mensagem para o servidor
-MACSERVER=$(cat pdu.txt | netcat $IPSERVER 1234)
+MACSERVER=$(cat AUX-CATSERVER.txt | netcat $IPSERVER 1234)
 
-# MONTA A PDU
-echo "IP SERVER: $IPSERVER"
-echo "IP CLIENTE $IPCLIENTE"
-./makePDU.sh $IPCLIENTE $IPSERVER
-
-# ---------------------------------------------
-# ENVIA O DADO PARA O DESTINO
+# retransmissão
 echo
 echo "MAC do Cliente: $MACCLIENTE"
 echo "MAC do Server: $MACSERVER"
-echo "IP Server: $IPSERVER"
-echo "Mensagem: $MENSAGEM"
 
+# MONTA A PDU
+echo
+echo "IP SERVER: $IPSERVER"
+echo "IP CLIENTE $IPCLIENTE"
+./CLIENT-make-PDU.sh $IPCLIENTE $IPSERVER
+# ---------------------------------------------
+# CHECKSUM=$(cat CLIENTE-1-PDU.txt | netcat $IPSERVER 1234)
+CHECKSUM=10
+while [[ "$CHECKSUM" != 1000 && "$MACSERVER" != 1000 ]]; do
+	echo $CHECKSUM
+	CHECKSUM=$(cat CLIENT1-INTERNET1-quadro.txt | netcat $IPSERVER 1234)
+	echo $CHECKSUM
+done
 
 # METODO 1 - O cliente recebe o arquivo do servidor e salva em um arquivo
 # netcat 172.16.252.72 1234 > pdu_Cliente.txt
