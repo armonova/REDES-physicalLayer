@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "A mensagem que será enviada é" 
-cat CLIENTE4-CLIENTE1-mensagem.tx.txt
+cat CLIENT4-CLIENT1-mensagem.txt
 echo "Digite o IP do destino"
 read IPSERVER
 
@@ -25,6 +25,7 @@ MACSERVER=$(cat AUX-CATSERVER.txt | netcat $IPSERVER 1234)
 
 # retransmissão
 echo
+
 echo "MAC do Cliente: $MACCLIENTE"
 echo "MAC do Server: $MACSERVER"
 

@@ -14,7 +14,8 @@ while [[ 1 ]]; do
 	then
 		echo $CHECK
 		cat AUX-checkSum.txt | nc -l -p 1234
-		echo "$RECEBE" >> "INTERNET1-SERVER1-quadro.txt"
+		echo "$RECEBE" > "INTERNET1-SERVER1-quadro.txt"
+		./SERVER-open-PDU.sh
 
 	fi
 	case "$RECEBE" in

@@ -1,0 +1,1 @@
+MAIL FROM: guceconelli@gmail.com RCPT TP: arthur@gmail.com DATA SandroRedes . QUIT

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-QUA=`cat INTERNET-SERVER1-quadro.txt`
+QUA=`cat INTERNET1-SERVER1-quadro.txt`
 
 echo QUA:
 echo $QUA
