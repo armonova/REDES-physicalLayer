@@ -22,6 +22,9 @@ while [[ 1 ]]; do
 		MAC)	cat AUX-MACServer.txt | nc -l -p 1234
 				echo "MAC informado"
 				cat AUX-MACServer.txt;;
+		*)		cat SERVER3-SERVER1-segmento.txt | nc -l -p 1234
+				echo "ACK informado"
+				cat SERVER3-SERVER1-segmento.txt
 	esac
 done
 
