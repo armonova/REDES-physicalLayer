@@ -57,7 +57,7 @@ app.get('/read_file',function(req,res) {
             }
         }
 
-        buffer++;
+        buffer = 0;
 
         while (fileTextArray[buffer] != ".") {
         	console.log("fileTextArray: " + fileTextArray[buffer]);

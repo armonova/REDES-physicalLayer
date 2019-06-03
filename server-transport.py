@@ -2,7 +2,7 @@ import os
 import sys
 
 segmentReceived = 'SERVER1-SERVER3-quadro.txt'
-messageSent = 'SERVER3-SERVER4-mensagem.txt'
+messageSent = 'SERVER3-SERVER4-segmento.txt'
 
 messageReceived = 'SERVER4-SERVER3-mensagem.txt'
 segmentSent = 'SERVER3-SERVER1-segmento.txt'
@@ -148,11 +148,14 @@ if receiving:
         inputFile = segmentReceived
         outputFile = messageSent
 
+        print "entrou"
+
         if udp:
             print("Using UDP\n")
             writeOutput(outputFile, '', getOnlyFileData(inputFile))
         if tcp:
             print("Using TCP\n")
             writeOutput(outputFile, '', getOnlyFileData(inputFile))
-        else:
-            print("Undefined protocol used\n\n")
+        # else:
+        #     print "entrou"
+        #     print("Undefined protocol used\n\n")
