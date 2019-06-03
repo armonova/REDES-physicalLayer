@@ -16,6 +16,8 @@ def getAllFileContent(filename):
     file = open(filename, 'r')
     return "DATA:\n" + file.read()
 
+def getSequenceNumber():
+    return 1
 
 def getOnlyFileData(filename):
 
@@ -37,9 +39,16 @@ def getMessageSequence():
     return 1
 
 
-def TCPHeader(srcPort, dstPort, length, checksum):
-    # Implementar
-    header = ""
+def TCPHeader(srcPort, dstPort, length, checksum, sequenceNumber, ackNumber, windowSize, urgentPointer, options, padding):
+    header = "SRCPORT: " + str(srcPort) + ", DSTPORT: " + str(dstPort) + \
+        ", SEQUENCENUMBER: " + str(sequenceNumber) + \
+        "\nACKNUMBER: " + str(ackNumber) + \
+        "\nLENGTH: " + str(length) + \
+        "\nWINDOWSIZE: " + str(windowSize) + \
+        "\nCHKSUM: " + str(checksum) + \
+        "\nURGENTPOINTER: " + str(urgentPointer) + \
+        "\nOPTIONS: " + str(options) + \
+        "\nPADDING: " + str(padding) + '\n'
     return header
 
 
@@ -72,9 +81,9 @@ if sending:
     inputFile = messageReceived
     outputFile = segmentSent
 
+    srcPort = 3000
+    dstPort = 25
     if udp:
-        srcPort = 3000
-        dstPort = 25
 
         body = getAllFileContent(inputFile)
         length = getFileLength(inputFile)
@@ -85,10 +94,31 @@ if sending:
 
         writeOutput(outputFile, header, body)
 
+    if tcp:
+        print("Using TCP\n")
+        
+        #three way handshake
+
+        body = getAllFileContent(inputFile)
+        length = getFileLength(inputFile)
+        checksum = 0
+
+        header = TCPHeader(srcPort, dstPort, length, checksum, getSequenceNumber(), 1, 1024, 3, 7, 1)
+        writeOutput(outputFile, header, body)
+    else:
+        print("Undefined protocol used\n\n")
+
 if receiving:
     print("Client reading from PHY layer, sending to APP layer")
     inputFile = segmentReceived
     outputFile = messageSent
 
     if udp:
+        print("Using UDP\n")
         writeOutput(outputFile, '', getOnlyFileData(inputFile))
+    if tcp:
+        print("Using TCP\n")
+        writeOutput(outputFile, '', getOnlyFileData(inputFile))
+    else:
+        print("Undefined protocol used\n\n")
+
