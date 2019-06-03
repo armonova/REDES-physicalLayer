@@ -1,8 +1,8 @@
 import os
 import sys
 
-segmentReceived = 'SERVER1-SERVER3-segmento.txt'
-messageSent = 'SERVER3-SERVER4-mensgem.txt'
+segmentReceived = 'SERVER1-SERVER3-quadro.txt'
+messageSent = 'SERVER3-SERVER4-mensagem.txt'
 
 messageReceived = 'SERVER4-SERVER3-mensagem.txt'
 segmentSent = 'SERVER3-SERVER1-segmento.txt'

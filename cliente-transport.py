@@ -4,8 +4,10 @@ import sys
 messageReceived = 'CLIENT4-CLIENT3-mensagem.txt'
 segmentSent = 'CLIENT3-CLIENT1-segmento.txt'
 
-segmentReceived = 'CLIENT1-CLIENT3-segmento.txt'
-messageSent = 'CLIENT3-CLIENT4-mensgem.txt'
+segmentReceived = 'CLIENT1-CLIENT3-quadro.txt'
+messageSent = 'CLIENT3-CLIENT4-mensagem.txt'
+
+receiveBuffer = [3]
 
 
 def getFileLength(filename):
@@ -63,6 +65,12 @@ def UPDHeader(srcPort, dstPort, length, checksum):
 
     return header
 
+def addToBuffer(data):
+    for i in range(1,3):
+        if receiveBuffer[i] is None or receiveBuffer[i] == -1:
+            receiveBuffer[i] = data
+    
+    return 1
 
 def writeOutput(outputFile, header, body):
     print(header)
@@ -156,6 +164,7 @@ if receiving:
             writeOutput(outputFile, '', getOnlyFileData(inputFile))
         if tcp:
             print("Using TCP\n")
+            addToBuffer(getOnlyFileData(inputFile))
             writeOutput(outputFile, '', getOnlyFileData(inputFile))
         else:
             print("Undefined protocol used\n\n")
