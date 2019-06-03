@@ -132,16 +132,29 @@ if sending:
             print("Undefined protocol used\n\n")
 
 if receiving:
-    print("Client reading from PHY layer, sending to APP layer")
-    inputFile = segmentReceived
-    outputFile = messageSent
-
-    if udp:
-        print("Using UDP\n")
-        writeOutput(outputFile, '', getOnlyFileData(inputFile))
-    if tcp:
-        print("Using TCP\n")
-        writeOutput(outputFile, '', getOnlyFileData(inputFile))
+    if ack or finack or fin:
+        print("Establishing TCP connection\n")
+        if ack:
+            print "Receiving ACK segment"
+            writeOutput("CLIENT3-CLIENT1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
+        if finack:
+            print "Receiving FINACK segment"
+            writeOutput("CLIENT3-CLIENT1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
+        if fin:
+            print "Receiving FIN segment"
+            #writeOutput("CLIENT3-CLIENT1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
+            print "Connection successfully established!"
     else:
-        print("Undefined protocol used\n\n")
+        print("Client reading from PHY layer, sending to APP layer")
+        inputFile = segmentReceived
+        outputFile = messageSent
+
+        if udp:
+            print("Using UDP\n")
+            writeOutput(outputFile, '', getOnlyFileData(inputFile))
+        if tcp:
+            print("Using TCP\n")
+            writeOutput(outputFile, '', getOnlyFileData(inputFile))
+        else:
+            print("Undefined protocol used\n\n")
 
