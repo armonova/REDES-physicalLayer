@@ -35,7 +35,7 @@ app.get('/read_file',function(req,res) {
 
     var content = "";
 
-    fs.readFile("SERVER1-SERVER4-mensagem.txt", 'utf8', function(err, data) {  
+    fs.readFile("SERVER3-SERVER4-segmento.txt", 'utf8', function(err, data) {  
         if (err) throw err;
         console.log(data);
         fileTextArray = data.split(/\s+/); // array de string com as strings do arquivo

@@ -150,7 +150,7 @@ class User {
         // toFile.concat("QUIT\n");
         toFile += "QUIT\n";
 
-        fs.writeFile("CLIENT4-CLIENT1-mensagem.txt", toFile, (err) => {
+        fs.writeFile("CLIENT4-CLIENT3-mensagem.txt", toFile, (err) => {
             if (err) console.log(err);-
             console.log("Successfully Written to File.");
         });
