@@ -1,3 +1,1 @@
-MAIL FROM: guceconelli@gmail.com RCPT TP: arthur@gmail.com 
-DATA:
-SandroRedes . QUIT
+SRCPORT: 3000, DSTPORT: 25 LENGTH: 86, CHKSUM: 0 DATA: MAIL FROM: guceconelli@gmail.com RCPT TP: arthur@gmail.com DATA ArthurGostoso . QUIT

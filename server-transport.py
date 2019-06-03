@@ -26,10 +26,12 @@ def getOnlyFileData(filename):
     body = ""
 
     for line in file:
-        if reachedBody:
-            body += line
-        if line == "DATA:\n":
-            reachedBody = True
+        stringSplit = line.split()
+        print (stringSplit)
+        for index, item in enumerate(stringSplit):
+            if item == "DATA":
+                for a in stringSplit[index + 1:]:
+                    body += a + " "
 
     print(body)
     return body
@@ -147,8 +149,6 @@ if receiving:
         print("Server reading from PHY layer, sending to APP layer")
         inputFile = segmentReceived
         outputFile = messageSent
-
-        print "entrou"
 
         if udp:
             print("Using UDP\n")
