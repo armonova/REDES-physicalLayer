@@ -1,11 +1,11 @@
 import os
 import sys
 
-segmentReceived = 'SERVER1-SERVER3-segmento.txt'
-messageSent = 'SERVER3-SERVER4-mensgem.txt'
+messageReceived = 'CLIENT4-CLIENT3-mensagem.txt'
+segmentSent = 'CLIENT3-CLIENT1-segmento.txt'
 
-messageReceived = 'SERVER4-SERVER3-mensagem.txt'
-segmentSent = 'SERVER3-SERVER1-segmento.txt'
+segmentReceived = 'CLIENT1-CLIENT3-segmento.txt'
+messageSent = 'CLIENT3-CLIENT4-mensgem.txt'
 
 
 def getFileLength(filename):
@@ -51,6 +51,10 @@ def TCPHeader(srcPort, dstPort, length, checksum, sequenceNumber, ackNumber, win
         "\nPADDING: " + str(padding) + '\n'
     return header
 
+def TWHHeader(sequenceNumber, length):
+    header = "SEQUENCENUMBER: " + str(sequenceNumber) + \
+        "\nLENGTH: " + str(length)
+    return header
 
 def UPDHeader(srcPort, dstPort, length, checksum):
     header = "SRCPORT: " + str(srcPort) + ", DSTPORT: " + str(dstPort) + \
@@ -59,10 +63,6 @@ def UPDHeader(srcPort, dstPort, length, checksum):
 
     return header
 
-def TWHHeader(sequenceNumber, length):
-    header = "SEQUENCENUMBER: " + str(sequenceNumber) + \
-        "\nLENGTH: " + str(length)
-    return header
 
 def writeOutput(outputFile, header, body):
     print(header)
@@ -77,47 +77,52 @@ def writeOutput(outputFile, header, body):
 sending = sys.argv[1] == "send"
 receiving = sys.argv[1] == "receive"
 
-# sys.argv[2] => opcao que diz se esta usando UDP ou TCP
+# sys.argv[2] => opcao que diz se esta usando UDP ou TCP ou three way handshake
 udp = sys.argv[2] == "udp"
 tcp = sys.argv[2] == "tcp"
 ack = sys.argv[2] == "ack"
 finack = sys.argv[2] == "finack"
 fin = sys.argv[2] == "fin"
 
+
 if sending:
     if ack or finack or fin:
         print("Establishing TCP connection\n")
         if ack:
             print "Sending ACK segment"
-            writeOutput("SERVER3-SERVER1-ACK.txt", TWHHeader(getSequenceNumber(), 32), "\nACK")
+            writeOutput("CLIENT3-CLIENT1-ACK.txt", TWHHeader(getSequenceNumber(), 32), "\nACK")
         if finack:
             print "Sending FINACK segment"
-            writeOutput("SERVER3-SERVER1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
+            writeOutput("CLIENT3-CLIENT1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
         if fin:
             print "Sending FIN segment"
-            writeOutput("SERVER3-SERVER1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
+            writeOutput("CLIENT3-CLIENT1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
             print "Connection successfully established!"
     else:
-        print("Server reading from APP layer, sending to PHY layer")
+        print("Client reading from APP layer, sending to PHY layer")
         inputFile = messageReceived
         outputFile = segmentSent
 
+        srcPort = 3000
+        dstPort = 25
+
         if udp:
-            print("Using UDP\n")
-            srcPort = 25
-            dstPort = 3000
 
             body = getAllFileContent(inputFile)
             length = getFileLength(inputFile)
             checksum = 0
 
+            print("Using UDP\n")
             header = UPDHeader(srcPort, dstPort, length, checksum)
 
             writeOutput(outputFile, header, body)
+
         if tcp:
             print("Using TCP\n")
             
             #three way handshake
+            #connectionSuccess = threeWayHandshake()
+            #if connectionSuccess:
 
             body = getAllFileContent(inputFile)
             length = getFileLength(inputFile)
@@ -133,16 +138,16 @@ if receiving:
         print("Establishing TCP connection\n")
         if ack:
             print "Receiving ACK segment"
-            writeOutput("SERVER3-SERVER1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
+            writeOutput("CLIENT3-CLIENT1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
         if finack:
             print "Receiving FINACK segment"
-            writeOutput("SERVER3-SERVER1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
+            writeOutput("CLIENT3-CLIENT1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
         if fin:
             print "Receiving FIN segment"
             #writeOutput("CLIENT3-CLIENT1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")
             print "Connection successfully established!"
     else:
-        print("Server reading from PHY layer, sending to APP layer")
+        print("Client reading from PHY layer, sending to APP layer")
         inputFile = segmentReceived
         outputFile = messageSent
 
@@ -154,3 +159,4 @@ if receiving:
             writeOutput(outputFile, '', getOnlyFileData(inputFile))
         else:
             print("Undefined protocol used\n\n")
+
