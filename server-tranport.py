@@ -1,37 +1,94 @@
 import os
+import sys
 
-quadroReceived = 'SERVER1-SERVER3-quadro.txt'
-segmentSentAPL = 'SERVER3-SERVER4-segmento.txt'
-segmentSentFIS = 'SERVER3-SERVER1-segmento.txt'
-segmentReceived = 'CLIENT3-CLIENT1-segmento.txt'
+segmentReceived = 'SERVER1-SERVER3-segmento.txt'
+messageSent = 'SERVER3-SERVER4-mensgem.txt'
 
-def getMessageLength(filename):
+messageReceived = 'SERVER4-SERVER3-mensagem.txt'
+segmentSent = 'SERVER3-SERVER1-segmento.txt'
+
+
+def getFileLength(filename):
     return os.stat(filename).st_size
 
+
+def getAllFileContent(filename):
+    file = open(filename, 'r')
+    return "DATA:\n" + file.read()
+
+
+def getOnlyFileData(filename):
+
+    file = open(filename, 'r')
+    reachedBody = False
+    body = ""
+
+    for line in file:
+        if reachedBody:
+            body += line
+        if line == "DATA:\n":
+            reachedBody = True
+
+    print(body)
+    return body
+
+
 def getMessageSequence():
-    
     return 1
 
-def getSegmentSentHeader(length, sequence):
-    header = "SEQUENCE: " + str(sequence) + "\nLENGTH: " + str(length)
+
+def TCPHeader(srcPort, dstPort, length, checksum):
+    # Implementar
+    header = ""
     return header
 
-def getMessageReceivedBody(filename): #thats wrong
-    file = open(filename, 'r')
-    for line in file:
-        if(line == "DATA"):
-            return line
-    return line
 
-def sendSegment(header, body):
-    file = open(segmentSent, 'w')
+def UPDHeader(srcPort, dstPort, length, checksum):
+    header = "SRCPORT: " + str(srcPort) + ", DSTPORT: " + str(dstPort) + \
+        "\nLENGTH: " + str(length) + \
+        ", CHKSUM: " + str(checksum) + '\n'
+
+    return header
+
+
+def writeOutput(outputFile, header, body):
+    print(header)
+    print(body)
+    file = open(outputFile, 'w')
     file.write(header)
     file.write(body)
     file.close()
-    return True
 
-length = getMessageLength(messageReceived)
-sequence = getMessageSequence()
-header = getSegmentSentHeader(length, sequence)
 
-print header
+# sys.argv[1] => opcao que diz se esta enviando ou recebendo mensagem
+sending = sys.argv[1] == "send"
+receiving = sys.argv[1] == "receive"
+# sys.argv[2] => opcao que diz se esta usando UDP ou TCP
+udp = sys.argv[2] == "udp"
+tcp = sys.argv[2] == "tcp"
+
+if sending:
+    print("Server reading from APP layer, sending to PHY layer")
+    inputFile = messageReceived
+    outputFile = segmentSent
+
+    if udp:
+        print("Using UDP\n")
+        srcPort = 25
+        dstPort = 3000
+
+        body = getAllFileContent(inputFile)
+        length = getFileLength(inputFile)
+        checksum = 0
+
+        header = UPDHeader(srcPort, dstPort, length, checksum)
+
+        writeOutput(outputFile, header, body)
+
+if receiving:
+    print("Server reading from PHY layer, sending to APP layer")
+    inputFile = segmentReceived
+    outputFile = messageSent
+
+    if udp:
+        writeOutput(outputFile, '', getOnlyFileData(inputFile))
