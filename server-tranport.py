@@ -1,7 +1,8 @@
 import os
 
-messageReceived = 'SERVER1-SERVER3-quadro.txt'
-segmentSent = 'SERVER3-SERVER4-segmento.txt'
+quadroReceived = 'SERVER1-SERVER3-quadro.txt'
+segmentSentAPL = 'SERVER3-SERVER4-segmento.txt'
+segmentSentFIS = 'SERVER3-SERVER1-segmento.txt'
 segmentReceived = 'CLIENT3-CLIENT1-segmento.txt'
 
 def getMessageLength(filename):

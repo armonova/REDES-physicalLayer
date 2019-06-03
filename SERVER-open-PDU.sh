@@ -52,4 +52,4 @@ echo    $DESTINIP
 echo        
 echo    $DATA
 
-echo $DATA > SERVER1-SERVER4-mensagem.txt
+echo $DATA > SERVER1-SERVER4-quadro.txt
