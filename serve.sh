@@ -43,6 +43,14 @@ cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address
 while [[ 1 ]]; do
 	echo
 
+	ACK=$(<SERVER3-SERVER1-ACK.txt)
+
+	if [ "$ACK" ];
+	then
+		echo $ACK
+		cat SERVER3-SERVER1-ACK.txt | nc -l -p 1234
+	fi
+
 	RECEBE=$(nc -l -p 1234 -q 2)
 	CHECK=${#RECEBE}
 	if [ $CHECK -ge 10 ];

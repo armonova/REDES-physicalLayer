@@ -1,0 +1,81 @@
+Para executar a camada de APLICAÇÃO (CLIENTE)
+1.	Abra o terminal na pasta raiz
+2.	Execute o comando $ node app.js
+3.	Abra o navegador no link http://localhost:3000
+4.	Envie a requisição como Email e a mensagem que você deseja
+
+=========================================================================================
+Para executar a camada de TRANSPORTE (CLIENTE)
+1.	Abra o terminal e execute o comando $ python cliente-transport.py send tcp
+2.	Será criado o arquivo com o segmento para enviar para a camada física
+
+=========================================================================================
+Para executar a camada FÍSICA (SERVIDOR)
+
+1. 	Abra o terminal
+2.	Execute o comando $ ./server.sh
+3.	Espere a requisição do cliente
+4. 	Veja na tela a PDU que foi recebida
+
+obs.: Será mostrado após receber a requisição
+- A requisição feita pelo cliente
+  - A requisição pode ser: 
+	- do MAC, sendo assim o server irá informar o MAC do server
+	- da mensagem, desse modo a mensagem será mostrada, que no caso é a PDU
+- O MAC que será informado para o cliente
+- A quadro convertido de binário para a mensagem que será entregue à camada de aplicação
+
+obs2: Está implementado a retransmissão de dados, então pode ser que alguns pacotes chegem mais de uma vez no servidor, mas isso não gera nenhum problema pois sempre as mensagens são sobrescritas.
+
+
+=========================================================================================
+Para executar a camada FÍSICA (CLIENTE)
+
+1. 	Abra o terminal
+1.1	Execute o comando $ ifconfig
+1.1.1	Pegue o IP informado pelo comando
+1.1.2	Altere a linha #12 do arquivo "client.sh" com o IP informado e salve o arquivo
+2. 	Execute o comando $ ./cliente.sh
+2.1 	Será mostrado no terminal a mensagem vinda da camada de Aplicação, confira se condiz com o que foi enviado
+2.2	Digite o IP da máquina destino
+
+obs.: Será mostrado após informar o IP os seguintes dados
+- IP do servidor
+- IP do cliente
+- A mensagem que foi enviada (convertida para binário e montada o quadro)
+- A PDU formada
+- O MAC do cliente
+- O MAC do servidor
+
+=========================================================================================
+Para executar a camada de TRANSPORTE (SERVER)
+
+1.	Abra o terminal na pasta raiz e execute o comando $ python server-transport.py receive tcp
+2.	Será gerado o arquivo para que seja recebido pela aplicação
+3.	Para enviar o ACK, digite o comando $ python server-transport.py send ack
+
+=========================================================================================
+Para executar a camada de APLICAÇÃO (SERVER)
+
+1.	Abra o navegador e abra o seguinte link http://localhost:3000/read_file
+2.	Será mostrado no navegador a mensagem que foi enviada.
+
+=========================================================================================
+Para executar a camada FÍSICA (SERVER) - Envio do ACK
+
+1. 	Abra o terminal
+2.	Execute o comando $ ./server.sh
+3.	Será enviado para o cliente o ACK 
+
+=========================================================================================
+Para executar a camada FÍSICA (CLIENTE) - Recebimento do ACK
+
+1.	Abra o terminal e digite o comando $ ./cliente
+2.	Informe o IP e espere receber da do server o ACK
+
+=========================================================================================
+Para executar a camda de TRANPORTE (CLIENTE) - Recebimento do ACK
+
+1.	Abra o terminal e execute o comando $ python cliente-transport.py receive tcp
+2.	Será mostrado no terminal o valor do ACK
+

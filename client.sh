@@ -93,10 +93,13 @@ echo "IP CLIENTE $IPCLIENTE"
 # ---------------------------------------------
 # CHECKSUM=$(cat CLIENTE-1-PDU.txt | netcat $IPSERVER 1234)
 CHECKSUM=10
-while [[ "$CHECKSUM" != 1000 && "$MACSERVER" != 1000 ]]; do
-	echo $CHECKSUM
-	CHECKSUM=$(cat CLIENT1-INTERNET1-quadro.txt | netcat $IPSERVER 1234)
-	echo $CHECKSUM
+while [[ 1 ]]; 
+do
+	if [[ "$CHECKSUM" != 1000 && "$MACSERVER" != 1000 ]]; 
+	then
+		CHECKSUM=$(cat CLIENT1-INTERNET1-quadro.txt | netcat $IPSERVER 1234)
+		echo $CHECKSUM
+	fi
 done
 
 # METODO 1 - O cliente recebe o arquivo do servidor e salva em um arquivo

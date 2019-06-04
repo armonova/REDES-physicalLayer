@@ -1,6 +1,6 @@
 MAIL FROM: guceconelli@gmail.com
 RCPT TP: arthur@gmail.com
 DATA 
-ArthurGostoso
+Sandro é bacana
 .
 QUIT
