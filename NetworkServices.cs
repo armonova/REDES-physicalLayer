@@ -16,7 +16,7 @@ namespace camada_rede
             return (myNetworkIP == destNetworkIP);
         }
 
-        private string ConvertToBin(string ip)
+        public  string ConvertToBin(string ip)
         {
             int fromBase = 16;
             int toBase = 10;
@@ -24,7 +24,7 @@ namespace camada_rede
             return Convert.ToString(Convert.ToInt32(ip, fromBase), toBase);
         }
 
-        private string BitwiseAndOperation(string first, string second)
+        public string BitwiseAndOperation(string first, string second)
         {
             var firstNums = first.Split(".");
             var secondNums = second.Split(".");
@@ -32,7 +32,7 @@ namespace camada_rede
             var result = string.Empty;
             for (var i = 0; i < 4; i++)
             {
-                result += int.Parse(firstNums[i]) & int.Parse(firstNums[i]);
+                result += int.Parse(firstNums[i]) & int.Parse(secondNums[i]);
                 if (i != 3)
                     result += ".";
             }

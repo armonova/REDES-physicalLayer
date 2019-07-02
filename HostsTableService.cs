@@ -8,19 +8,27 @@ namespace camada_rede
     public class HostsTableService
     {
         private HostsTable HostsTable;
-        
+        private NetworkServices networkServices = new NetworkServices();
+
         public HostsTable GetHosts(string path)
         {
             using (var reader = new StreamReader(path))
             {
                 var content = reader.ReadToEnd();
-                return JsonConvert.DeserializeObject<HostsTable>(content);
+                HostsTable = JsonConvert.DeserializeObject<HostsTable>(content);
+                return HostsTable;
             }
         }
 
-        public Host CheckIP(string ip)
+        public Host CheckIP(string myIP, string destIP, string myMask)
         {
-
+            foreach (var host in HostsTable.Hosts)
+            {
+                if (networkServices.BitwiseAndOperation(destIP, host.Mask) == host.NetworkIP)
+                {
+                    return host;
+                }
+            }
             return null;
         }
     }

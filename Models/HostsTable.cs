@@ -19,5 +19,9 @@ namespace camada_rede
 
         [JsonProperty("Gateway")]
         public string Gateway {get; set;}
+
+        public override string ToString(){
+            return $"{{\n\tNetworkIP: {NetworkIP},\n\tMask: {Mask},\n\tGateway: {Gateway}\n}}\n";
+        }
     }
 }
