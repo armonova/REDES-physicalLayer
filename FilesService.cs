@@ -43,6 +43,12 @@ namespace camada_rede
             return lines[21];
         }
 
+        public string RemovePhysicalLayerHeader(string pdu)
+        {
+            var data = pdu.Split("DATA: ")[1];
+            return data;
+        }
+
         public string ReadFile(string path)
         {
             var content = string.Empty;
