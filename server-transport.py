@@ -1,11 +1,11 @@
 import os
 import sys
 
-segmentReceived = 'SERVER1-SERVER3-quadro.txt'
+segmentReceived = 'SERVER2-SERVER3-pacote.txt'
 messageSent = 'SERVER3-SERVER4-segmento.txt'
 
 messageReceived = 'SERVER4-SERVER3-mensagem.txt'
-segmentSent = 'SERVER3-SERVER1-segmento.txt'
+segmentSent = 'SERVER3-SERVER2-segmento.txt'
 
 
 def getFileLength(filename):

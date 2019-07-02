@@ -9,7 +9,7 @@ namespace camada_rede
         public static NetworkServices networkService = new NetworkServices();
         public static string hostsPath = "hostsTable.json";
         public static Configuration config;
-
+    
         public static void Main(string[] args)
         {
             if (args.Length < 2)
@@ -44,13 +44,17 @@ namespace camada_rede
 
             if (role == "sending")
             {
-                //read from CLIENT3-CLIENT2-segmento.txt
                 var destinationIP = "192.168.2.0";
+                
+                //read from CLIENT3-CLIENT2-segmento.txt
+                var segmento = filesService.ReadFile("CLIENT3-CLIENT2-segmento.txt");
 
                 //check if is sending to gateway or the destination is in the same sub network
                 if (networkService.IsIPInMyNetwork("192.168.1.0", "192.168.2.0", "255.255.255.0"))
                 {
-                    //write to CLIENT2-CLIENT1-pacote.txt
+                    // write to CLIENT2-CLIENT1-pacote.txt
+                    var pacote = filesService.WriteIpPDU (config.Ip, destinationIP, segmento);
+                    filesService.WriteToFile("CLIENT2-CLIENT1-pacote.txt", pacote);
                 }
                 else
                 {
@@ -61,11 +65,13 @@ namespace camada_rede
                     Console.Write(host);
 
                     //write to CLIENT2-CLIENT1-pacote.txt    filesService.WriteFile(path, content);
+                    var pacote = filesService.WriteIpPDU (config.Ip, destinationIP, segmento);
+                    filesService.WriteToFile("CLIENT2-CLIENT1-pacote.txt", pacote);
                 }
             }
             else if (role == "receiving")
             {
-                var content = filesService.ReadFile("");
+                var pdu = filesService.ReadFile("SERVER1-SERVER2-quadro.txt");
             }
             else
             {
@@ -81,9 +87,10 @@ namespace camada_rede
                 Ip = "192.168.1.0",
                 Mask = "255.255.255.0"
             };
-
-            var data = filesService.ReadFile("SERVER1-SERVER3-quadro.txt");
-            //filesService.WriteIpPDU()
+            var pdu = filesService.ReadFile("SERVER1-SERVER2-quadro.txt");
+            var sourceIp = filesService.GetSourceIp(pdu);
+            var destinationIP = filesService.GetDestinationIp(pdu);
+            filesService.WriteToFile("SERVER2-SERVER3-pacote.txt", pdu);
         }
     }
 }

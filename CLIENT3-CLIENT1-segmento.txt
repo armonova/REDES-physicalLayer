@@ -1,9 +1,0 @@
-SRCPORT: 3000, DSTPORT: 25
-LENGTH: 89, CHKSUM: 0
-DATA:
-MAIL FROM: guceconelli@gmail.com
-RCPT TP: arthur@gmail.com
-DATA 
-Sandro é bacana
-.
-QUIT

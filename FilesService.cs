@@ -33,14 +33,14 @@ namespace camada_rede
 
         public string GetSourceIp(string PDU)
         {
-            var lines = PDU.Split('\n');
-            return lines[3];
+            var lines = PDU.Split(" ");
+            return lines[20];
         }
 
         public string GetDestinationIp(string PDU)
         {
-            var lines = PDU.Split('\n');
-            return lines[4];
+            var lines = PDU.Split(" ");
+            return lines[21];
         }
 
         public string ReadFile(string path)

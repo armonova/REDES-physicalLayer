@@ -49,7 +49,7 @@ d4=$(printf "%08d" $d4)
 SOURCEIP=$s1$s2$s3$s4
 DESTINIP=$d1$d2$d3$d4
 
-DATA=`cat SERVER4-SERVER1-mensagem.txt`
+DATA=`cat SERVER2-SERVER1-segmento.txt`
 
 DATA=`echo $DATA | perl -lpe '$_=unpack"B*"'`
 

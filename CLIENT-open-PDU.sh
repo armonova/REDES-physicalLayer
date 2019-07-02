@@ -52,4 +52,4 @@ echo    $DESTINIP
 echo        
 echo    $DATA
 
-echo $DATA > CLIENT1-CLIENT4-mensagem.txt
+echo $DATA > CLIENT1-CLIENT2-quadro.txt

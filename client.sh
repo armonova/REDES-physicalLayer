@@ -57,7 +57,7 @@
 #!/bin/bash
 
 echo "A mensagem que será enviada é" 
-cat CLIENT3-CLIENT1-segmento.txt
+cat CLIENT2-CLIENT1-pacote.txt
 echo "Digite o IP do destino"
 read IPSERVER
 

@@ -2,10 +2,10 @@ import os
 import sys
 
 messageReceived = 'CLIENT4-CLIENT3-mensagem.txt'
-segmentSent = 'CLIENT3-CLIENT1-segmento.txt'
+segmentSent = 'CLIENT3-CLIENT2-segmento.txt'
 
-segmentReceived = 'CLIENT1-CLIENT3-quadro.txt'
-messageSent = 'CLIENT3-CLIENT4-mensagem.txt'
+segmentReceived = 'CLIENT2-CLIENT3-pacote.txt'
+messageSent = 'CLIENT3-CLIENT4-segmento.txt'
 
 receiveBuffer = [3]
 
