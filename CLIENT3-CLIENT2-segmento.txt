@@ -1,6 +1,6 @@
 SRCPORT: 3000, DSTPORT: 25, SEQUENCENUMBER: 1
 ACKNUMBER: 1
-LENGTH: 83
+LENGTH: 81
 WINDOWSIZE: 1024
 CHKSUM: 0
 URGENTPOINTER: 3
@@ -8,8 +8,8 @@ OPTIONS: 7
 PADDING: 1
 DATA:
 MAIL FROM: guceconelli@gmail.com
-RCPT TP: mourão@viado.cu
+RCPT TP: mourao@bonito.br
 DATA 
-dei o bubu
+desculpa
 .
 QUIT

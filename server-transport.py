@@ -137,7 +137,7 @@ if receiving:
         print("Establishing TCP connection\n")
         if ack:
             print "Receiving ACK segment"
-            writeOutput("SERVER3-SERVER1-FINACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
+            writeOutput("SERVER3-SERVER1-ACK.txt", TWHHeader(getSequenceNumber(), 32), "\nFINACK")
         if finack:
             print "Receiving FINACK segment"
             writeOutput("SERVER3-SERVER1-FIN.txt", TWHHeader(getSequenceNumber(), 32), "\nFIN")

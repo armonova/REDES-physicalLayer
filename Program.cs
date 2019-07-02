@@ -44,7 +44,7 @@ namespace camada_rede
 
             if (role == "sending")
             {
-                var destinationIP = "172.16.251.17";
+                var destinationIP = "172.16.251.217";
 
                 //read from CLIENT3-CLIENT2-segmento.txt
                 var segmento = filesService.ReadFile("CLIENT3-CLIENT2-segmento.txt");
@@ -54,6 +54,7 @@ namespace camada_rede
                 {
                     // write to CLIENT2-CLIENT1-pacote.txt
                     var pacote = filesService.WriteIpPDU(config.Ip, destinationIP, segmento);
+                    Console.WriteLine(pacote);
                     filesService.WriteToFile("CLIENT2-CLIENT1-pacote.txt", pacote);
                 }
                 else
@@ -81,7 +82,7 @@ namespace camada_rede
             //initial configuration (my ip and my mask)
             config = new Configuration()
             {
-                Ip = "172.16.251.15",
+                Ip = "172.16.251.217",
                 Mask = "255.255.255.0"
             };
 
@@ -89,7 +90,8 @@ namespace camada_rede
             var sourceIp = filesService.GetSourceIp(pdu);
             var destinationIP = filesService.GetDestinationIp(pdu);
             var data = filesService.RemovePhysicalLayerHeader(pdu);
-
+            Console.WriteLine(destinationIP);
+            Console.WriteLine(config.Ip);
             if (destinationIP == config.Ip)
             {
                 Console.WriteLine($"I'm the final destination. Removing header and writing to transport layer (SERVER2-SERVER3-pacote.txt)");

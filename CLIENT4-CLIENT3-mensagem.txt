@@ -1,6 +1,6 @@
 MAIL FROM: guceconelli@gmail.com
-RCPT TP: mourão@viado.cu
+RCPT TP: arthur@gmail.com
 DATA 
-dei o bubu
+novo teste
 .
 QUIT
