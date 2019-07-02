@@ -20,7 +20,7 @@ namespace camada_rede
         private static string protocol = "6";
         private static string checksum = "0";
 
-        public string MakeIpPDU(string sourceIp, string destinIp, string data)
+        public string WriteIpPDU(string sourceIp, string destinIp, string data)
         {
             string line1 = "VERSION: " + version + " IHL: " + ihl + " TOS: " + tos + " LENGTH: " + data.Length;
             string line2 = "ID: " + id + " FLAGS: " + flags + " OFFSET: " + offset;
@@ -50,6 +50,15 @@ namespace camada_rede
             {
                 content = reader.ReadToEnd();
                 return content;
+            }
+        }
+
+        public void WriteToFile(string path, string content)
+        {
+            using (var sw = new StreamWriter(path))
+            {
+                sw.Write(content);
+                sw.Flush();
             }
         }
     }
